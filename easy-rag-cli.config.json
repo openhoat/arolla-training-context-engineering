@@ -1,0 +1,22 @@
+{
+  "provider": "openai",
+  "openai": {
+    "embeddingModel": "text-embedding-3-small",
+    "chatModel": "gpt-4o-mini"
+  },
+  "ollama": {
+    "baseUrl": "http://localhost:11434",
+    "embeddingModel": "nomic-embed-text",
+    "chatModel": "gemini-3-flash-preview:cloud"
+  },
+  "index": {
+    "include": ["katas/rag/docs/**/*"],
+    "chunkSize": 500,
+    "chunkOverlap": 50,
+    "maxFileSize": 500000
+  },
+  "serve": {
+    "port": 3141,
+    "openBrowser": true
+  }
+}

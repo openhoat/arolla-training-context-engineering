@@ -1,0 +1,65 @@
+{
+  "name": "arolla-training-context-engineering",
+  "version": "1.0.0",
+  "description": "Ressources pour la formation Context Engineering d'Arolla",
+  "author": "Cyrille Martraire & Olivier Penhoat",
+  "license": "ISC",
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0",
+    "npm": ">=10.9.2"
+  },
+  "volta": {
+    "node": "22.13.0",
+    "npm": "10.9.2"
+  },
+  "scripts": {
+    "agent:loop": "tsx katas/agent-loop/src/agent.ts",
+    "build": "tsc",
+    "clean": "rimraf dist && mkdirp dist",
+    "format": "biome format --write .",
+    "mcp:run": "tsx katas/mcp/src/house-server.ts",
+    "prepare": "husky",
+    "qa": "npm run qa:biome && npm run qa:markdown",
+    "qa:fix": "npm run qa:biome:fix && npm run qa:markdown:fix",
+    "qa:biome": "biome check .",
+    "qa:biome:fix": "biome check --write .",
+    "qa:markdown": "markdownlint-cli2",
+    "qa:markdown:fix": "markdownlint-cli2 --fix",
+    "rag:ask": "easy-rag-cli ask",
+    "rag:clean": "rimraf .easy-rag-cli-store.json",
+    "rag:index": "easy-rag-cli index",
+    "rag:serve": "easy-rag-cli serve",
+    "marp": "marp",
+    "slides:decrypt": "openssl enc -d -aes-256-cbc -pbkdf2 -iter 100000 -pass env:SLIDES_KEY -in slides/slides.tar.gz.enc | tar xz -C slides",
+    "slides:encrypt": "tar cz -C slides images context-engineering.md ContextEngineering4Devs_training.pdf | openssl enc -aes-256-cbc -pbkdf2 -iter 100000 -pass env:SLIDES_KEY -out slides/slides.tar.gz.enc",
+    "slides:build": "npm run marp -- slides/context-engineering.md -o dist/slides/index.html --html --allow-local-files --no-stdin",
+    "slides:pdf": "npm run marp -- slides/context-engineering.md -o dist/slides/context-engineering.pdf --pdf --allow-local-files --no-stdin",
+    "slides:rebuild": "python3 scripts/rebuild_slides.py",
+    "slides:serve": "npm run marp -- -s slides/",
+    "slides:notes:build": "npm run marp -- slides/trainer-notes.md -o dist/slides/trainer-notes.html --html --allow-local-files --no-stdin",
+    "slides:notes:serve": "npm run marp -- -s slides/ --html --allow-local-files",
+    "slides:notes:pdf": "npm run marp -- slides/trainer-notes.md -o dist/slides/trainer-notes.pdf --pdf --allow-local-files --no-stdin",
+    "test": "node --eval \"console.log('No tests configured yet')\"",
+    "validate": "npm run qa && npm run build && npm run test"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.27.1",
+    "zod": "4.3.6"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.6",
+    "@commitlint/cli": "20.5.0",
+    "@commitlint/config-conventional": "20.5.0",
+    "@marp-team/marp-cli": "4.3.1",
+    "@types/node": "25.5.0",
+    "easy-rag-cli": "1.0.2",
+    "husky": "9.1.7",
+    "markdownlint-cli2": "0.22.1",
+    "mkdirp": "3.0.1",
+    "rimraf": "6.1.3",
+    "ts-node": "10.9.2",
+    "tsx": "4.22.4",
+    "typescript": "5.9.3"
+  }
+}
