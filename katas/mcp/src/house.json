@@ -1,0 +1,29 @@
+{
+  "devices": {
+    "lumiere_salon": {
+      "name": "Lumière du Salon",
+      "value": "off",
+      "type": "light"
+    },
+    "lumiere_chambre": {
+      "name": "Lumière de la Chambre",
+      "value": "off",
+      "type": "light"
+    },
+    "thermostat": {
+      "name": "Thermostat",
+      "value": "19",
+      "type": "thermostat"
+    },
+    "alarme": {
+      "name": "Alarme",
+      "value": "disarmed",
+      "type": "security"
+    },
+    "porte_entree": {
+      "name": "Porte d'entrée",
+      "value": "locked",
+      "type": "lock"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "local-rag": {
+      "command": "npx",
+      "args": ["-y", "mcp-local-rag"],
+      "env": {
+        "BASE_DIR": "./slides",
+        "DB_PATH": "./dist/lancedb/",
+        "CACHE_DIR": "./dist/embedding-models/"
+      }
+    }
+  }
+}

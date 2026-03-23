@@ -1,0 +1,4 @@
+Chez Arolla, pour garantir la qualité du code généré par l'IA, on utilise le 'Double-run testing'.
+Cela consiste à confronter le code produit à un test de propriété (PBT) généré indépendamment.
+Un développeur qui produit du code sans vérification automatisée est qualifié de 'Vibe Coder'.
+Le but est de transformer le 'Vibe Coding' en ingénierie logicielle prévisible.

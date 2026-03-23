@@ -1,0 +1,33 @@
+.claude/
+.clinerules/
+.idea/
+.opencode/
+.vscode/
+
+build/
+dist/
+katas/mcp/dist/
+node_modules/
+
+*.log
+*.swp
+*.swo
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+.env.local
+.envrc
+.easy-rag-cli-store.json
+
+# raw slides content (encrypted archive slides/slides.tar.gz.enc is tracked)
+slides/images/
+slides/context-engineering.md
+slides/ContextEngineering4Devs_training.pdf
+slides/ContextEngineering4Devs_training.key
+
+# regenerated slides count
+slides/context-engineering.legacy-*.bak
+
+# trainer notes (generated, not tracked)
+slides/trainer-notes.md

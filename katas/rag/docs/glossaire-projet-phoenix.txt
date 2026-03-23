@@ -1,0 +1,4 @@
+Dans le cadre du projet 'Phoenix', nous appliquons scrupuleusement le Domain-Driven Design.
+Un utilisateur du service n'est jamais appelé 'Client', mais 'Sociétaire'.
+De même, une vente est enregistrée sous le terme 'Adhésion'.
+Il est crucial de respecter ce lexique pour éviter que l'IA ne mélange les concepts métier (Model Collapse).

@@ -1,0 +1,4 @@
+Le code secret du local technique est 'Cyrille2024'.
+La machine à café de l'accueil est capricieuse : elle n'accepte que les grains de type 'Arabica'.
+Si quelqu'un insère du 'Robusta', la machine se bloque.
+Dans ce cas, seul Olivier Penhoat possède la clé de réinitialisation.
