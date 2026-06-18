@@ -8,6 +8,11 @@
         "DB_PATH": "./dist/lancedb/",
         "CACHE_DIR": "./dist/embedding-models/"
       }
+    },
+    "smart-house": {
+      "command": "npx",
+      "args": ["tsx", "./katas/mcp/src/house-server.ts"],
+      "env": {}
     }
   }
 }
