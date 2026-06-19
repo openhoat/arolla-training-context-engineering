@@ -1,12 +1,20 @@
 import { tools } from './tools.js'
 import type { Action, Tool } from './types.js'
 
+const WEATHER_KEYWORDS = ['météo', 'meteo', 'weather', 'todo']
+
+const isWeatherGoal = (p: string): boolean => WEATHER_KEYWORDS.some(kw => p.includes(kw))
+
 export const analyzeContext = (prompt: string): Map<string, boolean> => {
   const p = prompt.toLowerCase()
   const context = new Map<string, boolean>()
 
   context.set('has_secret_result', p.includes('le code secret est 42'))
   context.set('has_calc_result', p.includes('résultat outil : 25'))
+  context.set(
+    'has_weather_result',
+    p.includes('résultat outil :') && (p.includes('stormy') || p.includes('sunny'))
+  )
 
   return context
 }
@@ -16,6 +24,10 @@ const extractResults = (prompt: string): string => {
   const parts: string[] = []
   if (p.includes('le code secret est 42')) parts.push('le code secret est 42')
   if (p.includes('résultat outil : 25')) parts.push('le résultat du calcul est 25')
+  if (p.includes('résultat outil :') && p.includes('stormy'))
+    parts.push('la météo du code est orageuse (STORMY)')
+  if (p.includes('résultat outil :') && p.includes('sunny'))
+    parts.push('la météo du code est ensoleillée (SUNNY)')
   if (parts.length === 0) return ''
   return `${parts.join(', ')}. `
 }
@@ -27,11 +39,13 @@ export const decideAction = (prompt: string): Action => {
   const needsSecret = p.includes('secret')
   const needsCalc =
     p.includes('calcule') || p.includes('calcul') || p.includes('*') || p.includes('+')
-  const needsNothing = !needsSecret && !needsCalc
+  const weatherGoal = isWeatherGoal(p)
+  const needsNothing = !needsSecret && !needsCalc && !weatherGoal
 
   const allDone =
     (!needsSecret || context.get('has_secret_result')) &&
-    (!needsCalc || context.get('has_calc_result'))
+    (!needsCalc || context.get('has_calc_result')) &&
+    (!weatherGoal || context.get('has_weather_result'))
 
   if (!needsNothing && allDone) {
     const results = extractResults(prompt)
@@ -55,6 +69,20 @@ export const decideAction = (prompt: string): Action => {
       toolName: 'complex_calculation',
       args: calcArgs,
       message: `Vous devriez utiliser l'outil 'complex_calculation' avec les arguments ${calcArgs.join(', ')}.`,
+    }
+  }
+
+  if (weatherGoal && !context.get('has_weather_result')) {
+    const goal = p.split('objectif :')[1]?.split('mémoire :')[0]?.trim() || ''
+    const fileMatch =
+      goal.match(/(?:fichier|file|dans)\s+([^\s]+)/i) ||
+      goal.match(/([\w./-]+\.(?:ts|js|tsx|jsx))/i)
+    const filePath = fileMatch ? fileMatch[1] : 'user-preferences.sample.ts'
+    return {
+      type: 'use_tool',
+      toolName: 'get_code_weather',
+      args: [filePath],
+      message: `Vous devriez utiliser l'outil 'get_code_weather' pour analyser le fichier ${filePath}.`,
     }
   }
 
