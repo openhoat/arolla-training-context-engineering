@@ -1,4 +1,15 @@
+import * as fs from 'node:fs'
+import * as path from 'node:path'
 import type { Tool } from './types.js'
+
+const KATA_DIR = 'katas/agent-loop/src'
+
+const resolvePath = (filePath: string): string => {
+  if (fs.existsSync(filePath)) return filePath
+  const alt = path.join(KATA_DIR, path.basename(filePath))
+  if (fs.existsSync(alt)) return alt
+  return filePath
+}
 
 export const tools: Tool[] = [
   {
@@ -34,5 +45,22 @@ export const tools: Tool[] = [
       return []
     },
     keywords: ['calcule', 'calcul', 'calculate'],
+  },
+  {
+    name: 'get_code_weather',
+    description:
+      'Analyse un fichier source pour compter les TODOs et retourne la météo du code (STORMY si >= 3 TODOs, SUNNY sinon)',
+    execute: (args: unknown[]) => {
+      const rawPath = String(args[0] || 'user-preferences.sample.ts')
+      const filePath = resolvePath(rawPath)
+      try {
+        const content = fs.readFileSync(filePath, 'utf-8')
+        const todoCount = (content.match(/TODO/gi) || []).length
+        return todoCount >= 3 ? 'STORMY' : 'SUNNY'
+      } catch (error) {
+        return `ERROR: ${error instanceof Error ? error.message : String(error)}`
+      }
+    },
+    keywords: ['météo', 'weather', 'code', 'todo'],
   },
 ]
