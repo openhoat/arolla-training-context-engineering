@@ -55,7 +55,7 @@ export const tools: Tool[] = [
       const filePath = resolvePath(rawPath)
       try {
         const content = fs.readFileSync(filePath, 'utf-8')
-        const todoCount = (content.match(/TODO/gi) || []).length
+        const todoCount = (content.match(/\/\/ TODO/gi) || []).length
         return todoCount >= 3 ? 'STORMY' : 'SUNNY'
       } catch (error) {
         return `ERROR: ${error instanceof Error ? error.message : String(error)}`
